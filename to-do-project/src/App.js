@@ -2,6 +2,7 @@ import "./App.css";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import DisplayToDos from "./components/DisplayToDos/DisplayToDos";
+import AddToDoForm from "./components/AddToDoForm/AddToDoForm";
 function App() {
   const [todos, setTodos] = useState([]);
   useEffect(() => {
@@ -18,6 +19,8 @@ function App() {
     }
   }
   return <div>
+    <h1>To Do App</h1>
+    <AddToDoForm getAllTodos={getAllTodos} />
     <DisplayToDos todos={todos}/>
   </div>;
 }
