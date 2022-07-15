@@ -21,7 +21,7 @@ function App() {
   return <div>
     <h1>To Do App</h1>
     <AddToDoForm getAllTodos={getAllTodos} />
-    <DisplayToDos todos={todos}/>
+    <DisplayToDos getAllTodos={getAllTodos} todos={todos}/>
   </div>;
 }
 
