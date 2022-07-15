@@ -30,25 +30,23 @@ const DisplayToDos = (props) => {
   }
   return (
     <div>
-      <table>
+      <table className="table mb-4">
         <thead>
           <tr>
-            <th>Todo Item</th>
-            <th>Status</th>
-            <th>Actions</th>
+            <th scope="col">Todo Item</th>
+            <th scope="col">Status</th>
+            <th scope="col">Actions</th>
           </tr>
         </thead>
         <tbody>
           {props.todos.map((object) => {
             return (
-              <tr key={object.id}>
+              <tr scope="row" key={object.id}>
                 <td>{object.name}</td>
                 <td>{object.completed}</td>
                 <td>
-                  <button onClick={() => deleteItem(object.id)}>DELETE</button>
-                </td>
-                <td>
-                  <button onClick={() => finished(object)}>STATUS</button>
+                  <button className="btn btn-danger" onClick={() => deleteItem(object.id)}>Delete</button>
+                  <button className="btn btn-success ms-1" onClick={() => finished(object)}>Status</button>
                 </td>
               </tr>
             );
