@@ -9,18 +9,21 @@ const DisplayToDos = (props) => {
       alert(error.message);
     }
   }
-  async function finished(body) {
+  async function status(body) {
+
     let currentBody = {
       name: body.name,
       completed: "",
     };
-    if ((body.completed === "Not Started")) {
+
+    if (body.completed === "Not Started") {
       currentBody.completed = "In Progress";
-    } else if ((body.completed === "In Progress")) {
+    } else if (body.completed === "In Progress") {
       currentBody.completed = "Completed";
     } else {
       currentBody.completed = "Not Started";
     }
+
     try {
       await axios.put(`http://127.0.0.1:8000/todos/${body.id}/`, currentBody);
       props.getAllTodos();
@@ -33,7 +36,7 @@ const DisplayToDos = (props) => {
       <table className="table mb-4">
         <thead>
           <tr>
-            <th scope="col">Todo Item</th>
+            <th scope="col">To do Item</th>
             <th scope="col">Status</th>
             <th scope="col">Actions</th>
           </tr>
@@ -45,8 +48,18 @@ const DisplayToDos = (props) => {
                 <td>{object.name}</td>
                 <td>{object.completed}</td>
                 <td>
-                  <button className="btn btn-danger" onClick={() => deleteItem(object.id)}>Delete</button>
-                  <button className="btn btn-success ms-1" onClick={() => finished(object)}>Status</button>
+                  <button
+                    className="btn btn-danger"
+                    onClick={() => deleteItem(object.id)}
+                  >
+                    Delete
+                  </button>
+                  <button
+                    className="btn btn-success ms-1"
+                    onClick={() => status(object)}
+                  >
+                    Status
+                  </button>
                 </td>
               </tr>
             );
