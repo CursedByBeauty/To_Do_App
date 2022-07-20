@@ -47,6 +47,7 @@ const DisplayToDos = (props) => {
       <table className="table mb-4">
         <thead>
           <tr>
+            <th></th>
             <th scope="col">To do Item</th>
             <th scope="col">Status</th>
             <th scope="col">Actions</th>
@@ -70,6 +71,9 @@ const DisplayToDos = (props) => {
                           ref={provided.innerRef}
                           scope="row"
                         >
+                          <td>
+                            <img src="https://img.icons8.com/external-royyan-wijaya-detailed-outline-royyan-wijaya/24/000000/external-drag-and-drop-development-royyan-wijaya-detailed-outline-royyan-wijaya.png" />
+                          </td>
                           <td>{object.name}</td>
                           <td>{object.completed}</td>
                           <td>
