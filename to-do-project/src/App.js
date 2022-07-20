@@ -27,7 +27,7 @@ function App() {
               <div className="card-body p-4">
               <h1 className="text-center my-3 pb-3">To Do App</h1>
               <AddToDoForm getAllTodos={getAllTodos} />
-              <DisplayToDos getAllTodos={getAllTodos} todos={todos} />
+              <DisplayToDos setTodos={setTodos} getAllTodos={getAllTodos} todos={todos} />
             </div>
           </div>
         </div>

@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+
 const DisplayToDos = (props) => {
   async function deleteItem(id) {
     try {
@@ -10,7 +12,6 @@ const DisplayToDos = (props) => {
     }
   }
   async function status(body) {
-
     let currentBody = {
       name: body.name,
       completed: "",
@@ -31,6 +32,16 @@ const DisplayToDos = (props) => {
       alert(error.message);
     }
   }
+  function handleOnDragEnd(result) {
+    try {
+      const items = Array.from(props.todos);
+      const [reorderedItem] = items.splice(result.source.index, 1);
+      items.splice(result.destination.index, 0, reorderedItem);
+      props.setTodos(items);
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
   return (
     <div>
       <table className="table mb-4">
@@ -41,30 +52,50 @@ const DisplayToDos = (props) => {
             <th scope="col">Actions</th>
           </tr>
         </thead>
-        <tbody>
-          {props.todos.map((object) => {
-            return (
-              <tr scope="row" key={object.id}>
-                <td>{object.name}</td>
-                <td>{object.completed}</td>
-                <td>
-                  <button
-                    className="btn btn-danger"
-                    onClick={() => deleteItem(object.id)}
-                  >
-                    Delete
-                  </button>
-                  <button
-                    className="btn btn-success ms-1"
-                    onClick={() => status(object)}
-                  >
-                    Status
-                  </button>
-                </td>
-              </tr>
-            );
-          })}
-        </tbody>
+        <DragDropContext onDragEnd={handleOnDragEnd}>
+          <Droppable droppableId="characters">
+            {(provided) => (
+              <tbody {...provided.droppableProps} ref={provided.innerRef}>
+                {props.todos.map((object, index) => {
+                  return (
+                    <Draggable
+                      key={object.id}
+                      draggableId={String(object.id)}
+                      index={index}
+                    >
+                      {(provided) => (
+                        <tr
+                          {...provided.draggableProps}
+                          {...provided.dragHandleProps}
+                          ref={provided.innerRef}
+                          scope="row"
+                        >
+                          <td>{object.name}</td>
+                          <td>{object.completed}</td>
+                          <td>
+                            <button
+                              className="btn btn-danger"
+                              onClick={() => deleteItem(object.id)}
+                            >
+                              Delete
+                            </button>
+                            <button
+                              className="btn btn-success ms-1"
+                              onClick={() => status(object)}
+                            >
+                              Status
+                            </button>
+                          </td>
+                        </tr>
+                      )}
+                    </Draggable>
+                  );
+                })}
+                {provided.placeholder}
+              </tbody>
+            )}
+          </Droppable>
+        </DragDropContext>
       </table>
     </div>
   );
